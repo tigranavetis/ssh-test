@@ -17,11 +17,26 @@ const conn = new Client();
 conn.on('ready', () => {
   if (process.argv[2] === '-L') {
     const args = process.argv[3].split(':');
-    if (args.length === 3) {
-      createLocalTunnel(conn, args[0], args[1], args[2]);
-    } else if (args.length === 4) {
-      createLocalTunnel(conn, args[1], args[2], args[3], args[0]);
+    if (args.length !== 3) {
+      throw Error('Please use correct notation for ssh forwarding');
     }
+
+    const fromPort = args[0];
+    const toPort = args[2];
+    const remoteHost = args[1];
+
+    // Very basic validation
+    if (!fromPort || isNaN(fromPort) || !toPort || isNaN(toPort)) {
+      throw Error('Please provide valid port numbers');
+    }
+
+    if (
+      remoteHost.split('.').length !== 4
+      || remoteHost.split('.').some(n => !n || isNaN(n) || parseInt(n) > 255 || parseInt(n) < 0)
+    ) {
+      throw Error('Please provide valid remote host address');
+    }
+    createLocalTunnel(conn, fromPort, remoteHost, toPort);
   } else {
     conn.shell((err, stream) => {
       if (err) throw err;

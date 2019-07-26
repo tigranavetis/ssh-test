@@ -9,7 +9,7 @@ const config = {
 
 for (let key of Object.keys(config)) {
   if (config[key] === undefined) {
-    throw 'Please provide all necessary configs';
+    throw Error('Please provide all necessary configs');
   }
 }
 
