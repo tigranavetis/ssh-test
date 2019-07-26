@@ -8,7 +8,7 @@ function createLocalTunnel(conn, fromPort, remoteHost, toPort, localhost = 'loca
       stream.pipe(socket);
     });
   }).listen(fromPort, localhost, () => {
-    console.log('Listening on the port', fromPort);
+    console.log('Listening on the port:', fromPort);
   });
 }
 

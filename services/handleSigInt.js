@@ -24,7 +24,7 @@ function handleSIGINT(conn) {
           killProcess(conn, pid);
         }
       } else {
-        for(let k of processes.keys()) {
+        for (let k of processes.keys()) {
           if (k !== '-bash') {
             const pid = processes.get(k);
             killProcess(conn, pid);
