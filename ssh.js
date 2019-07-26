@@ -8,6 +8,8 @@ const {
   createLocalTunnel,
 } = require('./services');
 
+const { completer } = require('./utils');
+
 const config = require('./config');
 
 const conn = new Client();
@@ -28,6 +30,7 @@ conn.on('ready', () => {
         input: process.stdin,
         output: process.stdout,
         preserveCursor: true,
+        completer: completer,
       });
 
       stream.on('close', () => {
